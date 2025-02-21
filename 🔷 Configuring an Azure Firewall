@@ -1,0 +1,73 @@
+🔷 Configuring an Azure Firewall
+
+🎯 **Objective:**
+Configure Azure Firewall to control outbound network access from an Azure subnet.
+
+🌟 **Why does this matter?:**
+Controlling outbound network access is crucial for network security, allowing you to limit access to specific websites, IP addresses, and ports.
+
+💡 **Use cases:**
+- Restricting access to unauthorized websites
+- Limiting outbound traffic to specific IP addresses
+- Implementing a comprehensive network security plan
+
+🛠️ **Steps to completion:**
+
+1. **Set up a test network environment:**
+   - Create a virtual network (VNet) and subnets for the test environment.
+     ```bash
+     az network vnet create --resource-group <resource_group_name> --name <vnet_name> --address-prefix <address_prefix> --subnet-name <subnet_name> --subnet-prefix <subnet_prefix>
+     ```
+
+2. **Deploy a firewall:**
+   - Deploy an Azure Firewall within the VNet.
+     ```bash
+     az network firewall create --name <firewall_name> --resource-group <resource_group_name> --vnet-name <vnet_name> --location <location>
+     az network public-ip create --resource-group <resource_group_name> --name <firewall_public_ip_name> --sku "Standard" --location <location>
+     az network firewall ip-config create --firewall-name <firewall_name> --name <ip_config_name> --public-ip-address <firewall_public_ip_name> --resource-group <resource_group_name>
+     ```
+
+3. **Create a default route:**
+   - Configure a default route to route traffic through the firewall.
+     ```bash
+     az network route-table create --name <route_table_name> --resource-group <resource_group_name>
+     az network route-table route create --resource-group <resource_group_name> --route-table-name <route_table_name> --name <route_name> --address-prefix "0.0.0.0/0" --next-hop-type "VirtualAppliance" --next-hop-ip-address <firewall_private_ip>
+     az network vnet subnet update --name <subnet_name> --vnet-name <vnet_name> --resource-group <resource_group_name> --route-table <route_table_name>
+     ```
+
+4. **Configure an application rule to allow access to www.google.com:**
+   - Create an application rule collection to allow access to www.google.com.
+     ```bash
+     az network firewall application-rule create --collection-name <collection_name> --firewall-name <firewall_name> --resource-group <resource_group_name> --action "allow" --priority 100 --rule-name <rule_name> --protocols "http=80" "https=443" --target-fqdns "www.google.com" --source-addresses "*"
+     ```
+
+5. **Configure a network rule to allow access to external DNS servers:**
+   - Create a network rule collection to allow access to external DNS servers.
+     ```bash
+     az network firewall network-rule create --collection-name <collection_name> --firewall-name <firewall_name> --resource-group <resource_group_name> --action "allow" --priority 100 --rule-name <rule_name> --protocols "udp=53" --source-addresses "*" --destination-addresses "*" --destination-ports 53
+     ```
+
+6. **Configure a NAT rule to allow a remote desktop to the test server:**
+   - Create a NAT rule collection to allow remote desktop access to the test server.
+     ```bash
+     az network firewall nat-rule create --collection-name <collection_name> --firewall-name <firewall_name> --resource-group <resource_group_name> --action "allow" --priority 100 --rule-name <rule_name> --protocol "tcp" --source-addresses "*" --destination-addresses <firewall_public_ip> --destination-ports 3389 --translated-address <test_server_private_ip> --translated-port 3389
+     ```
+
+7. **Test the firewall:**
+   - Verify that the configured rules are working as expected.
+     ```bash
+     # Use tools like `curl`, browser access, or RDP to test the rules
+     ```
+
+8. **Delete resources:**
+   - Remove the resources created for this exercise to avoid unnecessary costs.
+     ```bash
+     az group delete --name <resource_group_name> --yes --no-wait
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully configured Azure Firewall to control outbound network access from an Azure subnet. This demonstrates my ability to implement comprehensive network security measures in Azure. 🔐
