@@ -1,0 +1,54 @@
+🔷 Generating Shared Access Signature (SAS) Tokens
+
+🎯 **Objective:**
+Generate and test SAS tokens to control access to Azure storage resources.
+
+🌟 **Why does this matter?:**
+SAS tokens provide temporary access to Azure storage resources without exposing primary storage account keys. This is essential for security, especially when granting limited permissions to third-party applications or services.
+
+💡 **Use cases:**
+- Securely share resources with clients or partners
+- Restrict access to specific resources without sharing keys
+- Implement temporary access policies for testing or development
+
+🛠️ **Steps to completion:**
+
+1. **Create a Storage account and a container:**
+   - Use Azure Portal or Azure CLI to create a new storage account and a container within it.
+     ```bash
+     az storage account create --name <storage_account_name> --resource-group <resource_group_name> --location <location>
+     az storage container create --account-name <storage_account_name> --name <container_name>
+     ```
+
+2. **Upload images to Blob Storage:**
+   - Upload images or any other files to the created container.
+     ```bash
+     az storage blob upload --account-name <storage_account_name> --container-name <container_name> --name <blob_name> --file <path_to_file>
+     ```
+
+3. **Generate SAS token and URL:**
+   - Generate a SAS token and create the corresponding URL.
+     ```bash
+     sasToken=$(az storage container generate-sas --account-name <storage_account_name> --name <container_name> --permissions rwl --expiry 2025-02-21 --output tsv)
+     sasUrl="https://${storage_account_name}.blob.core.windows.net/${container_name}/${blob_name}?${sasToken}"
+     echo $sasUrl
+     ```
+
+4. **Test SAS URL:**
+   - Open the SAS URL in a browser or use a tool like `curl` to verify access.
+     ```bash
+     curl -v $sasUrl
+     ```
+
+5. **Clean up resources:**
+   - Delete the resources when they are no longer needed to avoid unnecessary costs.
+     ```bash
+     az storage account delete --name <storage_account_name> --resource-group <resource_group_name>
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you still need the resources created during your work sample. Running resources can incur costs.
+
+---
+
+Through this work sample, I successfully generated and tested SAS tokens to manage access to Azure storage resources. This demonstrates my proficiency with Azure storage and security best practices. 🚀
