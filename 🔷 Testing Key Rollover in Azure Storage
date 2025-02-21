@@ -1,0 +1,53 @@
+🔷 Testing Key Rollover in Azure Storage
+
+🎯 **Objective:**
+Test key rollover using Azure Storage Explorer to ensure secure access management.
+
+🌟 **Why does this matter?:**
+Key rollover is essential to maintain security in Azure storage. By regenerating and updating access keys, we prevent unauthorized access and reduce the risk of exposure.
+
+💡 **Use cases:**
+- Regular security maintenance for cloud storage
+- Securing access to sensitive data
+- Compliance with security policies
+
+🛠️ **Steps to completion:**
+
+1. **Download and install Azure Storage Explorer:**
+   - Get the tool from the official website.
+     ```bash
+     # Download Azure Storage Explorer
+     # URL: https://azure.microsoft.com/features/storage-explorer/
+     ```
+
+2. **Connect to Azure Storage:**
+   - Use the access keys from your Storage account to connect in Azure Storage Explorer.
+   - Verify navigation to Storage account content.
+     ```bash
+     # Use Azure Storage Explorer interface to connect and verify access
+     ```
+
+3. **Regenerate the storage account key:**
+   - Regenerate the key and verify that authentication fails.
+     ```bash
+     az storage account keys regenerate --account-name <storage_account_name> --key primary
+     ```
+
+4. **Reconnect using regenerated keys:**
+   - Update the connection in Azure Storage Explorer with the new keys and verify access.
+     ```bash
+     # Update Azure Storage Explorer with regenerated keys
+     ```
+
+5. **Clean up resources:**
+   - Delete resources to avoid unnecessary costs.
+     ```bash
+     az storage account delete --name <storage_account_name> --resource-group <resource_group_name>
+     ```
+
+⚡ **Tip:**
+Always assess the necessity of resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I effectively tested key rollover using Azure Storage Explorer, demonstrating secure key management in Azure storage. This showcases my ability to maintain and secure cloud storage environments. 🔐
