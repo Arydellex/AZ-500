@@ -1,2 +1,2 @@
-# AZ-500
-AZ-500 Labs &amp; Projects
+# Azure Security Engineering
+Azure security engineering Work Samples & Projects
