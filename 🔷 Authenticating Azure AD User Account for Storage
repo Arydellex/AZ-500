@@ -1,0 +1,46 @@
+🔷 Authenticating Azure AD User Account for Storage
+
+🎯 **Objective:**
+Authenticate an Azure AD user account for storage to ensure secure access management using Azure AD and Azure RBAC.
+
+🌟 **Why does this matter?:**
+Azure AD provides a secure way to authorize requests for blob data, leveraging role-based access control to manage permissions for users, groups, or application service principals.
+
+💡 **Use cases:**
+- Secure access to sensitive data
+- Compliance with organizational security policies
+- Centralized access management for Azure resources
+
+🛠️ **Steps to completion:**
+
+1. **Test Azure AD User account authentication for storage:**
+   - Use Azure AD to authorize requests for blob data.
+     ```bash
+     az login
+     az storage account list
+     ```
+
+2. **Configure Azure AD User account authentication for storage:**
+   - Assign a role to the user account to grant access permissions.
+     ```bash
+     az role assignment create --role "Storage Blob Data Reader" --assignee <user_principal_name> --scope /subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.Storage/storageAccounts/<storage_account_name>
+     ```
+
+3. **Verify access using Azure Storage Explorer:**
+   - Connect to the storage account using Azure Storage Explorer with the authenticated Azure AD user account.
+     ```bash
+     # Use Azure Storage Explorer interface to verify access
+     ```
+
+4. **Delete resources:**
+   - Remove resources to avoid unnecessary costs.
+     ```bash
+     az storage account delete --name <storage_account_name> --resource-group <resource_group_name>
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully authenticated an Azure AD user account for storage and configured access permissions using Azure RBAC. This demonstrates my ability to manage secure access to Azure resources efficiently. 🔐
