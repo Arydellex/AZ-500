@@ -1,0 +1,83 @@
+🔷 Configuring Network Virtual Appliance Routes
+
+🎯 **Objective:**
+Configure network virtual appliance routes to control traffic flow between public and private subnets.
+
+🌟 **Why does this matter?:**
+Network virtual appliances (NVAs) are essential for managing and securing traffic flow, filtering inbound requests, and protecting against malicious activities.
+
+💡 **Use cases:**
+- Managing traffic between subnets
+- Enhancing network security
+- Filtering and blocking malicious requests
+
+🛠️ **Steps to completion:**
+
+1. **Create a resource group with a storage account:**
+   - Use the Azure portal or Azure CLI to create a resource group and storage account.
+     ```bash
+     az group create --name <resource_group_name> --location <location>
+     az storage account create --name <storage_account_name> --resource-group <resource_group_name> --location <location> --sku Standard_LRS
+     ```
+
+2. **Create custom routes:**
+
+   - **Create a route table and custom route:**
+     ```bash
+     az network route-table create --name <route_table_name> --resource-group <resource_group_name> --location <location>
+     az network route-table route create --resource-group <resource_group_name> --route-table-name <route_table_name> --name <route_name> --address-prefix <address_prefix> --next-hop-type VirtualAppliance --next-hop-ip-address <nva_ip_address>
+     ```
+
+   - **Create a virtual network and subnets:**
+     ```bash
+     az network vnet create --name <vnet_name> --resource-group <resource_group_name> --location <location> --address-prefix <vnet_address_prefix> --subnet-name <public_subnet_name> --subnet-prefix <public_subnet_prefix>
+     az network vnet subnet create --vnet-name <vnet_name> --resource-group <resource_group_name> --name <private_subnet_name> --address-prefix <private_subnet_prefix>
+     ```
+
+   - **Associate the route table with the public subnet:**
+     ```bash
+     az network vnet subnet update --vnet-name <vnet_name> --resource-group <resource_group_name> --name <public_subnet_name> --route-table <route_table_name>
+     ```
+
+3. **Create an NVA and virtual machines:**
+
+   - **Deploy the network virtual appliance:**
+     ```bash
+     az vm create --resource-group <resource_group_name> --name <nva_name> --image <nva_image> --size <vm_size> --admin-username <admin_username> --admin-password <admin_password> --subnet <public_subnet_name> --vnet-name <vnet_name>
+     ```
+
+   - **Enable IP forwarding for the Azure network interface:**
+     ```bash
+     az network nic update --name <nva_nic_name> --resource-group <resource_group_name> --ip-forwarding true
+     ```
+
+   - **Enable IP forwarding in the appliance:**
+     ```bash
+     # Use the NVA interface to enable IP forwarding
+     ```
+
+4. **Route traffic through the NVA:**
+
+   - **Create public and private virtual machines:**
+     ```bash
+     az vm create --resource-group <resource_group_name> --name <public_vm_name> --image <image> --size <vm_size> --admin-username <admin_username> --admin-password <admin_password> --subnet <public_subnet_name> --vnet-name <vnet_name>
+     az vm create --resource-group <resource_group_name> --name <private_vm_name> --image <image> --size <vm_size> --admin-username <admin_username> --admin-password <admin_password> --subnet <private_subnet_name> --vnet-name <vnet_name>
+     ```
+
+   - **Test traffic routing through the network virtual appliance:**
+     ```bash
+     # Use tools like `ping`, `curl`, or `traceroute` to verify traffic routing
+     ```
+
+5. **Delete resources:**
+   - Remove the resources created for this exercise to avoid unnecessary costs.
+     ```bash
+     az group delete --name <resource_group_name> --yes --no-wait
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully configured network virtual appliance routes to control traffic between public and private subnets, demonstrating my ability to manage and secure network traffic in Azure. 🌐🔐
