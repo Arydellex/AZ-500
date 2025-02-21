@@ -1,0 +1,77 @@
+🔷 Create and Manage Groups in Azure AD
+
+🎯 **Objective:**
+Use Azure Active Directory (Azure AD) to create and manage groups, enhancing organization and access control for users in your organization.
+
+🌟 **Why does this matter?:**
+Managing groups in Azure AD allows you to streamline user management, improve security, and ensure appropriate access to resources.
+
+💡 **Use cases:**
+- Organizing users by department or role
+- Simplifying access control
+- Managing group memberships dynamically
+
+🛠️ **Steps to completion:**
+
+### Task 1: Create a Group for Your Organization
+
+1. **Create a group with the organization manager as the owner and add two employees as members:**
+   - Use the Azure portal or Azure CLI to create a new group.
+     ```bash
+     az ad group create --display-name "OrganizationGroup" --mail-nickname "OrgGroup" --security-enabled false --group-types "Unified"
+     az ad group owner add --group "OrganizationGroup" --owner-id <manager_object_id>
+     az ad group member add --group "OrganizationGroup" --member-id <employee1_object_id>
+     az ad group member add --group "OrganizationGroup" --member-id <employee2_object_id>
+     ```
+
+### Task 2: Update Group Membership
+
+2. **Add a new employee as a group member and remove the old employee:**
+   - Add the new employee to the group.
+     ```bash
+     az ad group member add --group "OrganizationGroup" --member-id <new_employee_object_id>
+     ```
+   - Remove the old employee from the group.
+     ```bash
+     az ad group member remove --group "OrganizationGroup" --member-id <old_employee_object_id>
+     ```
+
+### Task 3: Update Group Details
+
+3. **Provide a description for the group created in Task 1:**
+   - Update the group details to include a description of the organization.
+     ```bash
+     az ad group update --id "OrganizationGroup" --description "This group includes members of the organization."
+     ```
+
+### Task 4: Create a Dynamic Group for Departments
+
+4. **Create another group with dynamic membership and add dynamic query:**
+   - Create a dynamic user group for all departments in the organization.
+     ```bash
+     az ad group create --display-name "DepartmentGroup" --mail-nickname "DeptGroup" --security-enabled false --group-types "Unified"
+     az ad group update --id "DepartmentGroup" --membership-rule "user.department -eq 'IT'"
+     ```
+
+### Task 5: Delete the Organization Group
+
+5. **Delete the organization group created in Task 1:**
+   - Remove the organization group.
+     ```bash
+     az ad group delete --id "OrganizationGroup"
+     ```
+
+### Task 6: Restore the Deleted Organization Group
+
+6. **Restore the deleted organization group:**
+   - Restore the deleted group.
+     ```bash
+     az ad group restore --id "OrganizationGroup"
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs. User and group accounts will be required for subsequent exercises, so consider your billing preferences when deciding to keep or delete them.
+
+---
+
+In this work sample, I successfully created and managed groups in Azure AD, demonstrating my ability to organize users, manage group memberships, and streamline access control. This showcases my proficiency in using Azure management tools to enhance organizational structure and security. 🚀🔐
