@@ -1,0 +1,77 @@
+🔷 Azure Role-Based Access Control (RBAC) Role Assignments
+
+🎯 **Objective:**
+Create a resource group, assign role assignments to users, and manage access effectively.
+
+🌟 **Why does this matter?:**
+RBAC helps manage who has access to Azure resources, what they can do with those resources, and what areas they have access to, enhancing security and operational efficiency.
+
+💡 **Use cases:**
+- Managing access to Azure resources
+- Assigning roles and permissions
+- Controlling resource access
+
+🛠️ **Steps to completion:**
+
+### Task 1: Access the Azure Portal and Create a Resource Group
+
+1. **Create a resource group:**
+   - Use the Azure portal or Azure CLI to create a new resource group.
+     ```bash
+     az group create --name AZ500LAB01 --location "East US"
+     ```
+
+### Task 2: Assign Roles to Grant a User Access to Azure Resource
+
+2. **Assign roles:**
+   - Assign a role to a user to grant them access to the resource group created in Task 1.
+     ```bash
+     az role assignment create --assignee <user_object_id> --role "Contributor" --resource-group AZ500LAB01
+     ```
+
+### Task 3: Check the Role Assignment for Yourself
+
+3. **Check your role assignment:**
+   - Verify your role assignment within the Azure subscription.
+     ```bash
+     az role assignment list --assignee <your_object_id> --all
+     ```
+
+### Task 4: Check the Role Assignments for a Resource Group
+
+4. **Check role assignments for the resource group:**
+   - List all role assignments for the resource group created in Task 1.
+     ```bash
+     az role assignment list --resource-group AZ500LAB01
+     ```
+
+### Task 5: Check and Explore Roles
+
+5. **Explore roles:**
+   - Check and explore different roles available in Azure.
+     ```bash
+     az role definition list --query "[].{RoleName:roleName, Description:description}"
+     ```
+
+### Task 6: Remove Azure Role Assignment Access
+
+6. **Remove role assignment:**
+   - Remove the role assignment created in Task 2.
+     ```bash
+     az role assignment delete --assignee <user_object_id> --role "Contributor" --resource-group AZ500LAB01
+     ```
+
+### Task 7: Delete the Resources Created for This Exercise
+
+7. **Clean up resources:**
+   - Remove the resource group and all associated resources to avoid unnecessary costs.
+     ```bash
+     az group delete --name AZ500LAB01 --yes --no-wait
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully created a resource group and managed role assignments using Azure RBAC, demonstrating my ability to control and manage access to Azure resources effectively. This showcases my proficiency in using Azure management tools to enhance security and operational efficiency. 🚀🔐
