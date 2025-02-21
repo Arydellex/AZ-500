@@ -1,0 +1,64 @@
+🔷 Enabling Log Analytics
+
+🎯 **Objective:**
+Enable Log Analytics to monitor and analyze performance issues affecting critical online platforms.
+
+🌟 **Why does this matter?:**
+Log Analytics helps detect and resolve performance issues, ensuring a seamless shopping experience for customers by providing detailed insights and monitoring capabilities.
+
+💡 **Use cases:**
+- Detecting performance issues in critical applications
+- Analyzing logs for troubleshooting
+- Ensuring system performance and reliability
+
+🛠️ **Steps to completion:**
+
+1. **Deploy a Log Analytics workspace in the Central US region:**
+   - Use the Azure portal or Azure CLI to create a Log Analytics workspace.
+     ```bash
+     az monitor log-analytics workspace create --resource-group <resource_group_name> --workspace-name <workspace_name> --location "Central US"
+     ```
+
+2. **Connect your workspace to a VM:**
+   - Connect the Log Analytics workspace to your virtual machine.
+     ```bash
+     az vm extension set --resource-group <resource_group_name> --vm-name <vm_name> --name OmsAgentForLinux --publisher Microsoft.EnterpriseCloud.Monitoring --protected-settings '{"workspaceId":"<workspace_id>", "workspaceKey":"<workspace_key>"}'
+     ```
+
+3. **View the resources connected to your workspace:**
+   - Check the resources connected to the Log Analytics workspace.
+     ```bash
+     az monitor log-analytics workspace list --resource-group <resource_group_name> --query "[].{Name:name, ConnectedResources:properties.connectedResourcesCount}"
+     ```
+
+4. **Select the logs, Analytic and System, in Legacy agents management:**
+   - Configure the workspace to collect Analytic and System logs.
+     ```bash
+     # Use the Azure portal or Azure CLI to select the logs in the workspace settings
+     ```
+
+5. **Review how log data is stored and queried:**
+   - Understand the storage and query mechanisms for log data in Log Analytics.
+     ```bash
+     az monitor log-analytics query --workspace-id <workspace_id> --analytics-query "AzureDiagnostics | summarize count() by Category"
+     ```
+
+6. **Select the Event table and run an Event query:**
+   - Query the Event table to analyze specific logs.
+     ```bash
+     az monitor log-analytics query --workspace-id <workspace_id> --analytics-query "Event | where EventLog == 'System'"
+     ```
+
+7. **Clean up resources:**
+   - Remove the resources created for this exercise to avoid unnecessary costs.
+     ```bash
+     az monitor log-analytics workspace delete --resource-group <resource_group_name> --workspace-name <workspace_name> --yes
+     az group delete --name <resource_group_name> --yes --no-wait
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully enabled Log Analytics to monitor and analyze performance issues, demonstrating my ability to manage and analyze log data effectively. This showcases my proficiency in using Azure services for monitoring and troubleshooting critical applications. 🚀🔍
