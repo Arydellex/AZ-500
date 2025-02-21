@@ -1,0 +1,48 @@
+🔷 Configuring Azure Front Door
+
+🎯 **Objective:**
+Set up an Azure Front Door configuration to pool two instances of a web application in different Azure regions, ensuring traffic is directed to the nearest site and demonstrating automatic failover.
+
+🌟 **Why does this matter?:**
+Azure Front Door enhances the performance and reliability of web applications by directing traffic to the nearest available site and ensuring seamless failover in case of site unavailability.
+
+💡 **Use cases:**
+- Enhancing web application performance
+- Ensuring high availability and failover
+- Optimizing user experience by reducing latency
+
+🛠️ **Steps to completion:**
+
+1. **Create two instances of a web app:**
+   - Use the Azure portal or Azure CLI to create two instances of a web application in different Azure regions.
+     ```bash
+     az webapp create --resource-group <resource_group_name> --plan <app_service_plan> --name <webapp1_name> --runtime "NODE|14-lts" --location <region1>
+     az webapp create --resource-group <resource_group_name> --plan <app_service_plan> --name <webapp2_name> --runtime "NODE|14-lts" --location <region2>
+     ```
+
+2. **Create a Front Door for your application:**
+   - Set up an Azure Front Door to route traffic to the web application instances.
+     ```bash
+     az network front-door create --resource-group <resource_group_name> --name <front_door_name> --backend-pool-name <backend_pool_name> --backend-pool-load-balancing-settings-name <load_balancing_settings_name> --backend-pool-health-probe-settings-name <health_probe_settings_name> --backend-address <webapp1_name>.azurewebsites.net <webapp2_name>.azurewebsites.net
+     ```
+
+3. **View Azure Front Door in action:**
+   - Access the Front Door URL to verify that traffic is directed to the nearest site and demonstrates automatic failover.
+     ```bash
+     # Use a web browser to access the Front Door URL and observe the traffic routing behavior
+     ```
+
+4. **Delete resources:**
+   - Remove the resources created for this exercise to avoid unnecessary costs.
+     ```bash
+     az group delete --name <resource_group_name> --yes --no-wait
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully set up Azure Front Door to pool web application instances across different regions, ensuring traffic is routed to the nearest site and demonstrating automatic failover. This showcases my ability to enhance web application performance and reliability using Azure Front Door. 🚀🌐
+
+Is there another aspect or task you'd like to explore next? 😊
