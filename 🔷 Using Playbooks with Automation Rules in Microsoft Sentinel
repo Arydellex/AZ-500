@@ -1,0 +1,57 @@
+🔷 Using Playbooks with Automation Rules in Microsoft Sentinel
+
+🎯 **Objective:**
+Implement playbooks and automation rules in Microsoft Sentinel to enhance cybersecurity incident response and management.
+
+🌟 **Why does this matter?:**
+Playbooks and automation rules in Microsoft Sentinel streamline and automate incident response, improving the efficiency and effectiveness of cybersecurity operations.
+
+💡 **Use cases:**
+- Automating responses to security incidents
+- Streamlining threat detection and response processes
+- Enhancing overall security posture
+
+🛠️ **Steps to completion:**
+
+1. **Enable Microsoft Sentinel:**
+   - Use the Azure portal or Azure CLI to enable Microsoft Sentinel.
+     ```bash
+     az sentinel create --resource-group <resource_group_name> --workspace-name <workspace_name> --location "East US"
+     ```
+
+2. **Prepare the playbook and Logic App:**
+   - Create a Logic App that will serve as the playbook in Microsoft Sentinel.
+     ```bash
+     az logicapp create --resource-group <resource_group_name> --location "East US" --name <playbook_name> --definition @playbook-definition.json
+     ```
+
+3. **Add actions:**
+   - Define the actions that the playbook will take in response to an incident.
+     ```bash
+     az logicapp action create --resource-group <resource_group_name> --logic-app-name <playbook_name> --action-name <action_name> --definition @action-definition.json
+     ```
+
+4. **Respond to incident and alerts:**
+   - Configure automation rules in Microsoft Sentinel to trigger the playbook based on specific incidents or alerts.
+     ```bash
+     az sentinel automation-rule create --resource-group <resource_group_name> --workspace-name <workspace_name> --name <automation_rule_name> --trigger-type "Incident" --logic-app-resource-id <logic_app_resource_id>
+     ```
+
+5. **Run a playbook manually on an incident:**
+   - Manually trigger the playbook for a specific incident in Microsoft Sentinel.
+     ```bash
+     az sentinel incident trigger-playbook --resource-group <resource_group_name> --workspace-name <workspace_name> --incident-id <incident_id> --playbook-name <playbook_name>
+     ```
+
+6. **Delete the resources you created for this exercise:**
+   - Remove the resources created for this exercise to avoid unnecessary costs.
+     ```bash
+     az group delete --name <resource_group_name> --yes --no-wait
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully implemented playbooks with automation rules in Microsoft Sentinel, demonstrating my ability to enhance incident response and management. This showcases my proficiency in using Azure security tools to protect critical data and respond to cyber threats. 🛡️🚀
