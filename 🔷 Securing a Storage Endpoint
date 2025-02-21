@@ -1,0 +1,70 @@
+🔷 Securing a Storage Endpoint
+
+🎯 **Objective:**
+Secure a storage endpoint to enhance access control and security.
+
+🌟 **Why does this matter?:**
+Securing storage endpoints ensures that only authorized networks and services can access storage resources, protecting sensitive data from unauthorized access.
+
+💡 **Use cases:**
+- Enhancing security for sensitive data
+- Restricting access to specific networks
+- Implementing strict access control policies
+
+🛠️ **Steps to completion:**
+
+1. **Locate your Storage Account:**
+   - Identify your storage account in the Azure portal.
+     ```bash
+     az storage account list
+     ```
+
+2. **Create a file share and upload a file:**
+   - Create a new file share and upload a file to it.
+     ```bash
+     az storage share-rm create --resource-group <resource_group_name> --storage-account <storage_account_name> --name <file_share_name>
+     az storage file upload --account-name <storage_account_name> --share-name <file_share_name> --source <path_to_file>
+     ```
+
+3. **Generate SAS and connection string:**
+   - Create a SAS token and connection string for the file share.
+     ```bash
+     sasToken=$(az storage share generate-sas --account-name <storage_account_name> --name <file_share_name> --permissions rwl --expiry 2025-02-21 --output tsv)
+     connectionString="DefaultEndpointsProtocol=https;AccountName=<storage_account_name>;AccountKey=<account_key>;EndpointSuffix=core.windows.net;FileEndpoint=https://${storage_account_name}.file.core.windows.net;SharedAccessSignature=${sasToken}"
+     echo $connectionString
+     ```
+
+4. **Use Storage Explorer and the connection string to access the file share:**
+   - Connect to the file share using Azure Storage Explorer with the generated connection string.
+     ```bash
+     # Use Azure Storage Explorer interface to connect and verify access
+     ```
+
+5. **Under Service Endpoints, check Microsoft.Storage option:**
+   - Ensure that the Microsoft.Storage service endpoint is enabled for your virtual network.
+     ```bash
+     az network vnet subnet update --resource-group <resource_group_name> --vnet-name <vnet_name> --name <subnet_name> --service-endpoints Microsoft.Storage
+     ```
+
+6. **Add virtual network and verify that your subnet with the new service endpoint is listed:**
+   - Add your virtual network and verify the service endpoint.
+     ```bash
+     az network vnet create --resource-group <resource_group_name> --name <vnet_name> --address-prefix <address_prefix>
+     az network vnet subnet create --resource-group <resource_group_name> --vnet-name <vnet_name> --name <subnet_name> --address-prefix <subnet_prefix> --service-endpoints Microsoft.Storage
+     ```
+
+7. **Check Storage Explorer such that your file share can no longer be accessed:**
+   - Verify that the file share is no longer accessible without the correct network configuration.
+
+8. **Delete storage account:**
+   - Remove the storage account and related resources to avoid unnecessary costs.
+     ```bash
+     az storage account delete --name <storage_account_name> --resource-group <resource_group_name>
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully secured a storage endpoint, demonstrating my ability to enhance access control and secure storage resources in Azure. This showcases my proficiency in Azure security and management. 🛡️
