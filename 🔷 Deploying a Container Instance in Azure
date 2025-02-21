@@ -1,0 +1,48 @@
+🔷 Deploying a Container Instance in Azure
+
+🎯 **Objective:**
+Deploy a secure Azure Container Instance (ACI) with specific requirements and ensure proper cleanup.
+
+🌟 **Why does this matter?:**
+Azure Container Instances provide a fast, easy way to run containers without managing virtual machines. Ensuring these instances are secure and properly configured is crucial for a development team.
+
+💡 **Use cases:**
+- Rapid deployment of development or testing environments
+- Secure, isolated application hosting
+- Scaling applications without managing infrastructure
+
+🛠️ **Steps to completion:**
+
+1. **Create a resource group (if not already existing):**
+   - Ensure the resource group `AZ500LAB01` is created.
+     ```bash
+     az group create --name AZ500LAB01 --location "East US"
+     ```
+
+2. **Create an Azure Container Instance:**
+   - Deploy the container instance using the specified quickstart image and configuration.
+     ```bash
+     az container create --resource-group AZ500LAB01 --name mycontainer --image mcr.microsoft.com/azuredocs/aci-helloworld:latest --cpu 1 --memory 1 --dns-name-label mycontainerdns --ports 80 --location "East US"
+     ```
+
+3. **Verify the deployment:**
+   - Ensure that the container instance is running and accessible.
+     ```bash
+     az container show --resource-group AZ500LAB01 --name mycontainer --query "{FQDN:ipAddress.fqdn,Status:instanceView.state}" --output table
+     ```
+
+4. **Delete the resources created for this exercise:**
+   - Remove the container instance and the resource group to avoid unnecessary costs.
+     ```bash
+     az container delete --resource-group AZ500LAB01 --name mycontainer --yes
+     az group delete --name AZ500LAB01 --yes --no-wait
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully deployed and secured an Azure Container Instance, demonstrating my ability to manage containerized applications in Azure. This showcases my proficiency in leveraging Azure services for development and deployment. 🚀🔒
+
+Is there another task or aspect you'd like to explore next? 😊
