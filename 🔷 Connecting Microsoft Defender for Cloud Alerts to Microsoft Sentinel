@@ -1,0 +1,39 @@
+🔷 Connecting Microsoft Defender for Cloud Alerts to Microsoft Sentinel
+
+🎯 **Objective:**
+Integrate Microsoft Defender for Cloud with Microsoft Sentinel to enhance threat detection and response capabilities.
+
+🌟 **Why does this matter?:**
+Integrating Defender for Cloud with Sentinel allows you to view, analyze, and respond to security alerts and incidents within a broader organizational threat context, improving overall security posture.
+
+💡 **Use cases:**
+- Centralized threat detection and response
+- Enhancing security operations
+- Improving visibility into security incidents
+
+🛠️ **Steps to completion:**
+
+1. **Enable Microsoft Sentinel:**
+   - Use the Azure portal or Azure CLI to enable Microsoft Sentinel.
+     ```bash
+     az sentinel create --resource-group <resource_group_name> --workspace-name <workspace_name> --location "East US"
+     ```
+
+2. **Connect to Microsoft Defender for Cloud:**
+   - Stream security alerts from Defender for Cloud into Microsoft Sentinel.
+     ```bash
+     az sentinel data-connector create --resource-group <resource_group_name> --workspace-name <workspace_name> --data-connector-id <data_connector_id> --connector-kind "AzureDefender"
+     ```
+
+3. **Cleaning Up the Resources:**
+   - Delete the resources created for this exercise to avoid unnecessary costs.
+     ```bash
+     az group delete --name <resource_group_name> --yes --no-wait
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully connected Microsoft Defender for Cloud alerts to Microsoft Sentinel, demonstrating my ability to enhance threat detection and response capabilities. This showcases my proficiency in using Azure security tools to protect digital assets. 🛡️🚀
