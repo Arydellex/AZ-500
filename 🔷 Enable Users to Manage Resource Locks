@@ -1,0 +1,76 @@
+🔷 Enable Users to Manage Resource Locks
+
+🎯 **Objective:**
+Manage resource locks to protect resources from accidental changes or deletions by creating and testing locks on a storage account.
+
+🌟 **Why does this matter?:**
+Resource locks add an extra layer of protection by preventing changes or deletions to critical resources, ensuring they remain safe from accidental modification.
+
+💡 **Use cases:**
+- Protecting critical resources from accidental changes
+- Ensuring stability and security of important assets
+- Controlling and managing resource access
+
+🛠️ **Steps to completion:**
+
+### Task 1: Create a Resource Group with a Storage Account
+
+1. **Create a resource group:**
+   - Use the Azure portal or Azure CLI to create a new resource group.
+     ```bash
+     az group create --name AZ500LAB01 --location "East US"
+     ```
+
+2. **Create a storage account within the resource group:**
+   - Deploy a storage account in the newly created resource group.
+     ```bash
+     az storage account create --name mystorageaccount --resource-group AZ500LAB01 --location "East US" --sku Standard_LRS
+     ```
+
+### Task 2: Add a Read-Only Lock on the Storage Account
+
+3. **Add a Read-only lock:**
+   - Apply a read-only lock to the storage account to prevent modifications.
+     ```bash
+     az lock create --name "ReadOnlyLock" --resource-group AZ500LAB01 --resource-name mystorageaccount --resource-type "Microsoft.Storage/storageAccounts" --lock-type ReadOnly
+     ```
+
+### Task 3: Test the Read-Only Lock
+
+4. **Test the Read-only lock:**
+   - Attempt to modify the storage account and verify that the read-only lock is enforced.
+
+### Task 4: Remove the Read-Only Lock and Create a Delete Lock
+
+5. **Remove the read-only lock:**
+   - Delete the read-only lock from the storage account.
+     ```bash
+     az lock delete --name "ReadOnlyLock" --resource-group AZ500LAB01 --resource-name mystorageaccount --resource-type "Microsoft.Storage/storageAccounts"
+     ```
+
+6. **Create a delete lock:**
+   - Apply a delete lock to the storage account to prevent deletion.
+     ```bash
+     az lock create --name "DeleteLock" --resource-group AZ500LAB01 --resource-name mystorageaccount --resource-type "Microsoft.Storage/storageAccounts" --lock-type CanNotDelete
+     ```
+
+### Task 5: Test the Delete Lock
+
+7. **Test the delete lock:**
+   - Attempt to delete the storage account and verify that the delete lock is enforced.
+
+### Task 6: Delete the Resources You Created for This Exercise
+
+8. **Clean up resources:**
+   - Remove the locks and delete the resources created during this exercise.
+     ```bash
+     az lock delete --name "DeleteLock" --resource-group AZ500LAB01 --resource-name mystorageaccount --resource-type "Microsoft.Storage/storageAccounts"
+     az group delete --name AZ500LAB01 --yes --no-wait
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully managed resource locks by creating and testing read-only and delete locks on a storage account, demonstrating my ability to protect resources from accidental changes or deletions. This showcases my proficiency in using Azure management tools to ensure the security and stability of important assets. 🛡️🚀
