@@ -1,0 +1,55 @@
+🔷 Implement and Test Multi-Factor Authentication
+
+🎯 **Objective:**
+Enable Azure AD Multi-Factor Authentication (MFA) for a user, enhancing security by requiring additional verification.
+
+🌟 **Why does this matter?:**
+MFA adds an extra layer of security to user accounts by requiring multiple forms of verification, reducing the risk of unauthorized access.
+
+💡 **Use cases:**
+- Enhancing account security
+- Reducing the risk of unauthorized access
+- Implementing secure authentication methods
+
+🛠️ **Steps to completion:**
+
+### Task 1: Create a User (AZ500User1)
+
+1. **Create a new user in Azure AD:**
+   - Use the Azure portal or Azure CLI to create a user named `AZ500User1`.
+     ```bash
+     az ad user create --display-name "AZ500User1" --user-principal-name az500user1@contoso.com --password "<Password>" --force-change-password-next-login true
+     ```
+
+### Task 2: Configure MFA for This User
+
+2. **Configure MFA for AZ500User1:**
+   - Enable MFA for `AZ500User1` and set the authentication method to Phone.
+     ```bash
+     # Enable MFA in the Azure portal by navigating to Azure AD > Users > Multi-Factor Authentication
+     # Select the user `AZ500User1` and enable MFA
+     # Set up phone verification as the preferred authentication method
+     ```
+
+### Task 3: Test the MFA Requirement for the User
+
+3. **Test the MFA requirement:**
+   - Sign in as `AZ500User1` to verify that the MFA requirement is enforced.
+     ```bash
+     # Attempt to sign in with `AZ500User1` credentials and follow the MFA prompt for phone verification
+     ```
+
+### Task 4: Delete the Resources You Created for This Exercise
+
+4. **Clean up resources:**
+   - Remove the user and other configurations created during this exercise to avoid unnecessary costs.
+     ```bash
+     az ad user delete --id az500user1@contoso.com
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully enabled Azure AD Multi-Factor Authentication (MFA) for a user, demonstrating my ability to enhance account security by requiring additional verification. This showcases my proficiency in using Azure management tools to implement secure authentication methods. 🚀🔐
