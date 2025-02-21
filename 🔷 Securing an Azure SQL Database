@@ -1,0 +1,57 @@
+🔷 Securing an Azure SQL Database
+
+🎯 **Objective:**
+Secure an Azure SQL Database by configuring advanced data protection, data classification, and auditing.
+
+🌟 **Why does this matter?:**
+Securing an Azure SQL Database is essential to protect sensitive data, comply with security regulations, and detect potential threats.
+
+💡 **Use cases:**
+- Protecting sensitive information in databases
+- Ensuring compliance with data protection regulations
+- Detecting and responding to potential security threats
+
+🛠️ **Steps to completion:**
+
+1. **Create a resource group:**
+   - Use the Azure portal or Azure CLI to create a new resource group.
+     ```bash
+     az group create --name <resource_group_name> --location <location>
+     ```
+
+2. **Deploy an Azure SQL Database:**
+   - Create a new SQL database within the resource group.
+     ```bash
+     az sql db create --resource-group <resource_group_name> --server <sql_server_name> --name <database_name> --service-objective S0
+     ```
+
+3. **Configure Advanced Data Protection:**
+   - Enable Advanced Data Security features such as vulnerability assessments and threat detection.
+     ```bash
+     az sql db threat-policy update --resource-group <resource_group_name> --server <sql_server_name> --name <database_name> --state Enabled --email-account-admins Enabled --retention-days 90
+     ```
+
+4. **Configure Data Classification:**
+   - Classify sensitive data within the database to better understand and protect it.
+     ```bash
+     az sql db classification update --resource-group <resource_group_name> --server <sql_server_name> --name <database_name> --schema <schema_name> --table <table_name> --column <column_name> --information-type <information_type> --label <label>
+     ```
+
+5. **Configure Auditing:**
+   - Set up auditing to track database activities and detect potential threats.
+     ```bash
+     az sql db audit-policy update --resource-group <resource_group_name> --server <sql_server_name> --name <database_name> --state Enabled --storage-account <storage_account_name>
+     ```
+
+6. **Delete the resources created for this exercise:**
+   - Remove the SQL database and related resources to avoid unnecessary costs.
+     ```bash
+     az group delete --name <resource_group_name> --yes --no-wait
+     ```
+
+⚡ **Tip:**
+Always assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully secured an Azure SQL Database by configuring advanced data protection, data classification, and auditing. This showcases my ability to implement security measures and protect sensitive data in Azure SQL databases. 🛡️
