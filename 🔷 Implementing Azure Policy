@@ -1,0 +1,65 @@
+🔷 Implementing Azure Policy
+
+🎯 **Objective:**
+Create and enforce a policy that restricts available locations for new resources to North Central US and East US, ensuring geo-compliance.
+
+🌟 **Why does this matter?:**
+Azure Policies help enforce organizational standards and ensure compliance by controlling the properties of resources during deployment and throughout their lifecycle.
+
+💡 **Use cases:**
+- Enforcing geo-compliance requirements
+- Restricting resource locations
+- Ensuring organizational standards
+
+🛠️ **Steps to completion:**
+
+1. **Create a resource group:**
+   - Use the Azure portal or Azure CLI to create a resource group named `AZ500LAB01`.
+     ```bash
+     az group create --name AZ500LAB01 --location "East US"
+     ```
+
+2. **Create a custom Azure Policy definition:**
+   - Define a policy that restricts resource locations to North Central US and East US.
+     ```bash
+     az policy definition create --name "allowed-locations" --rules '
+     {
+       "if": {
+         "not": {
+           "field": "location",
+           "in": ["northcentralus", "eastus"]
+         }
+       },
+       "then": {
+         "effect": "deny"
+       }
+     }
+     ' --description "This policy allows only North Central US and East US locations." --display-name "Allowed Locations"
+     ```
+
+3. **Assign the Azure Policy to the resource group:**
+   - Assign the created policy to the `AZ500LAB01` resource group.
+     ```bash
+     az policy assignment create --policy "allowed-locations" --resource-group AZ500LAB01 --name "enforce-allowed-locations"
+     ```
+
+4. **Test the policy:**
+   - Attempt to create a resource in a location other than North Central US or East US to ensure the policy is enforced correctly.
+     ```bash
+     az vm create --resource-group AZ500LAB01 --name TestVM --image Win2019Datacenter --location "westus" --admin-username <admin_username> --admin-password <admin_password>
+     ```
+
+5. **Clean up resources:**
+   - Remove the resources and policy assignments to avoid unnecessary costs.
+     ```bash
+     az policy assignment delete --name "enforce-allowed-locations" --resource-group AZ500LAB01
+     az policy definition delete --name "allowed-locations"
+     az group delete --name AZ500LAB01 --yes --no-wait
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully implemented and enforced an Azure Policy to restrict resource locations, demonstrating my ability to ensure geo-compliance and enforce organizational standards. This showcases my proficiency in using Azure Policy to control and manage resource properties effectively. 🌟🛡️
