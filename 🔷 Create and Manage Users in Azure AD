@@ -1,0 +1,86 @@
+🔷 Create and Manage Users in Azure AD
+
+🎯 **Objective:**
+Create and manage various types of users in Azure Active Directory (Azure AD) to explore and become more familiar with the platform.
+
+🌟 **Why does this matter?:**
+Effectively managing users ensures proper access control, security, and organization within your Azure environment.
+
+💡 **Use cases:**
+- Onboarding new employees
+- Managing external collaborators
+- Ensuring accurate user roles and access
+
+🛠️ **Steps to completion:**
+
+### Task 1: Create a User for a New Employee
+
+1. **Create a new user in Azure AD:**
+   - Use the Azure portal or Azure CLI to create a user for a new employee.
+     ```bash
+     az ad user create --display-name "New Employee" --user-principal-name newemployee@contoso.com --password "<Password>" --force-change-password-next-login true
+     ```
+
+### Task 2: Create a Guest User for Someone from an External Organization
+
+2. **Create a guest user:**
+   - Add a guest user to your Azure AD tenant.
+     ```bash
+     az ad user invite --email <guest_email_address> --display-name "Guest User"
+     ```
+
+### Task 3: Update the Job Details of the User Created in Task 1
+
+3. **Update job details:**
+   - Update the job details for the new employee created in Task 1.
+     ```bash
+     az ad user update --id newemployee@contoso.com --job-title "Software Engineer" --department "IT"
+     ```
+
+### Task 4: Assign the Role of Global Reader to the User Created in Task 1
+
+4. **Assign Global Reader role:**
+   - Assign the Global Reader role to the new employee.
+     ```bash
+     az role assignment create --assignee newemployee@contoso.com --role "Global Reader"
+     ```
+
+### Task 5: Reset the Password for the User Created in Task 1
+
+5. **Reset the password:**
+   - Reset the password for the new employee.
+     ```bash
+     az ad user update --id newemployee@contoso.com --password "<NewPassword>" --force-change-password-next-login true
+     ```
+
+### Task 6: Delete the Guest User Created in Task 2
+
+6. **Delete the guest user:**
+   - Remove the guest user created in Task 2.
+     ```bash
+     az ad user delete --id <guest_email_address>
+     ```
+
+### Task 7: Restore the Guest User You Deleted in Task 6
+
+7. **Restore the guest user:**
+   - Restore the guest user deleted in Task 6.
+     ```bash
+     az ad user restore --id <guest_email_address>
+     ```
+
+### Task 8: Delete the Resources You Created for This Exercise
+
+8. **Clean up resources:**
+   - Remove the users and other resources created during this exercise to avoid unnecessary costs.
+     ```bash
+     az ad user delete --id newemployee@contoso.com
+     az ad user delete --id <guest_email_address>
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully created and managed users in Azure AD, demonstrating my ability to handle various user management tasks efficiently. This showcases my proficiency in using Azure management tools to ensure proper access control and security. 🚀🔐
