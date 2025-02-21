@@ -1,0 +1,80 @@
+🔷 Service Endpoints and Securing Storage
+
+🎯 **Objective:**
+Secure an Azure storage endpoint and control access through network configurations.
+
+🌟 **Why does this matter?:**
+Service endpoints extend your virtual network's private IP address space and identity to Azure services, enabling secure access to service resources while protecting against unauthorized access.
+
+💡 **Use cases:**
+- Secure access to Azure Storage from a virtual network
+- Restricting access to resources based on network security groups
+- Ensuring data protection and compliance
+
+🛠️ **Steps to completion:**
+
+1. **Create a virtual network:**
+   - Use the Azure portal or Azure CLI to create a virtual network.
+     ```bash
+     az network vnet create --resource-group <resource_group_name> --name <vnet_name> --address-prefix <address_prefix>
+     ```
+
+2. **Add a subnet to the virtual network and configure a storage endpoint:**
+   - Create a subnet and enable a storage service endpoint.
+     ```bash
+     az network vnet subnet create --vnet-name <vnet_name> --resource-group <resource_group_name> --name <subnet_name> --address-prefix <subnet_prefix> --service-endpoints "Microsoft.Storage"
+     ```
+
+3. **Configure a network security group to restrict access to the subnet:**
+   - Create a network security group and add rules to restrict access.
+     ```bash
+     az network nsg create --resource-group <resource_group_name> --name <nsg_name>
+     az network nsg rule create --resource-group <resource_group_name> --nsg-name <nsg_name> --name <rule_name> --priority 1000 --source-address-prefixes <source_prefix> --destination-port-ranges <port_range> --access Deny --protocol Tcp --direction Inbound
+     ```
+
+4. **Configure a network security group to allow RDP on the public subnet:**
+   - Allow RDP access to the public subnet.
+     ```bash
+     az network nsg rule create --resource-group <resource_group_name> --nsg-name <nsg_name> --name Allow-RDP --priority 100 --source-address-prefixes "*" --destination-port-ranges 3389 --access Allow --protocol Tcp --direction Inbound
+     ```
+
+5. **Create a storage account with a file share:**
+   - Create a new storage account and configure a file share.
+     ```bash
+     az storage account create --name <storage_account_name> --resource-group <resource_group_name> --location <location> --sku Standard_LRS
+     az storage share-rm create --resource-group <resource_group_name> --storage-account <storage_account_name> --name <file_share_name>
+     ```
+
+6. **Deploy virtual machines into the designated subnets:**
+   - Create and deploy VMs into the public and private subnets.
+     ```bash
+     az vm create --resource-group <resource_group_name> --name <public_vm_name> --image <image> --vnet-name <vnet_name> --subnet <public_subnet_name> --admin-username <admin_username> --admin-password <admin_password>
+     az vm create --resource-group <resource_group_name> --name <private_vm_name> --image <image> --vnet-name <vnet_name> --subnet <private_subnet_name> --admin-username <admin_username> --admin-password <admin_password>
+     ```
+
+7. **Test the storage connection from the private subnet:**
+   - Confirm that access to the storage account is allowed from the private subnet.
+     ```bash
+     # Use Azure Storage Explorer or command-line tools to verify access
+     ```
+
+8. **Test the storage connection from the public subnet:**
+   - Confirm that access to the storage account is denied from the public subnet.
+     ```bash
+     # Use Azure Storage Explorer or command-line tools to verify access
+     ```
+
+9. **Delete the resources you have created:**
+   - Remove the resources to avoid unnecessary costs.
+     ```bash
+     az group delete --name <resource_group_name> --yes --no-wait
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully secured a storage endpoint and configured network security to control access, showcasing my ability to manage and protect Azure resources effectively. 🚀🔒
+
+Is there another task or aspect you'd like to explore next? 😊
