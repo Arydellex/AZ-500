@@ -1,0 +1,67 @@
+🔷 Investigating Threats with Microsoft Sentinel
+
+🎯 **Objective:**
+Use Microsoft Sentinel to examine and investigate incidents, ensuring swift detection and response to potential threats.
+
+🌟 **Why does this matter?:**
+Timely investigation and response to security incidents are crucial to protect your organization's digital assets and maintain a secure environment.
+
+💡 **Use cases:**
+- Investigating unusual network activity
+- Detecting and responding to security threats
+- Enhancing incident response capabilities
+
+🛠️ **Steps to completion:**
+
+1. **Sign in to the Azure portal and set up Microsoft Sentinel:**
+   - Create a Log Analytics workspace.
+     ```bash
+     az monitor log-analytics workspace create --resource-group <resource_group_name> --workspace-name <workspace_name> --location "East US"
+     ```
+
+   - Install a solution from the content hub.
+     ```bash
+     az sentinel solution create --resource-group <resource_group_name> --workspace-name <workspace_name> --solution-id <solution_id>
+     ```
+
+   - Set up the data connector.
+     ```bash
+     az sentinel data-connector create --resource-group <resource_group_name> --workspace-name <workspace_name> --data-connector-id <data_connector_id> --connector-kind <connector_kind>
+     ```
+
+   - Review the status of data connectors in Microsoft Sentinel.
+     ```bash
+     az sentinel data-connector list --resource-group <resource_group_name> --workspace-name <workspace_name>
+     ```
+
+   - Connect Azure VMs to Log Analytics workspace.
+     ```bash
+     az vm extension set --resource-group <resource_group_name> --vm-name <vm_name> --name OmsAgentForLinux --publisher Microsoft.EnterpriseCloud.Monitoring --protected-settings '{"workspaceId":"<workspace_id>", "workspaceKey":"<workspace_key>"}'
+     ```
+
+   - Unauthorized Access: Attempt to login to your virtual machine with incorrect credentials to generate an alert.
+
+2. **Create custom analytics rules to detect threats:**
+   - Define custom analytics rules to identify specific threats.
+     ```bash
+     az sentinel alert-rule create --resource-group <resource_group_name> --workspace-name <workspace_name> --rule-template-id <rule_template_id> --rule-name <rule_name>
+     ```
+
+3. **Investigate incidents with Microsoft Sentinel:**
+   - Use Sentinel's incident investigation capabilities to analyze and respond to alerts.
+     ```bash
+     az sentinel incident list --resource-group <resource_group_name> --workspace-name <workspace_name>
+     ```
+
+4. **Delete the resources you created for this exercise:**
+   - Remove the resources to avoid unnecessary costs.
+     ```bash
+     az group delete --name <resource_group_name> --yes --no-wait
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully used Microsoft Sentinel to investigate threats, demonstrating my ability to detect and respond to security incidents efficiently. This showcases my proficiency in using Azure security tools to maintain a secure environment. 🛡️🚀
