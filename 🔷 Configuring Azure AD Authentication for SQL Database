@@ -1,0 +1,54 @@
+🔷 Configuring Azure AD Authentication for SQL Database
+
+🎯 **Objective:**
+Configure Azure AD authentication for a SQL database to enhance security and access control.
+
+🌟 **Why does this matter?:**
+Azure AD authentication provides a secure, centralized way to manage access to Azure SQL databases, leveraging role-based access control for enhanced security.
+
+💡 **Use cases:**
+- Centralized user management
+- Enhanced security for database access
+- Compliance with organizational security policies
+
+🛠️ **Steps to completion:**
+
+1. **Create a SQL database:**
+   - Use the Azure portal or Azure CLI to create a new SQL database.
+     ```bash
+     az sql db create --resource-group <resource_group_name> --server <sql_server_name> --name <database_name> --service-objective S0
+     ```
+
+2. **Navigate to the SQL server and set up an admin:**
+   - Configure the SQL server administrator in the Azure portal.
+     ```bash
+     az sql server ad-admin create --resource-group <resource_group_name> --server-name <sql_server_name> --display-name <admin_display_name> --object-id <admin_object_id>
+     ```
+
+3. **Connect to the database server using SQL Server Management Studio (SSMS):**
+   - Use your credentials to connect to the database server in SSMS.
+
+4. **Create a new user in the database:**
+   - Construct and execute a query to create a new Azure AD user.
+     ```sql
+     CREATE USER [<user_principal_name>] FROM EXTERNAL PROVIDER;
+     ALTER ROLE db_datareader ADD MEMBER [<user_principal_name>];
+     ALTER ROLE db_datawriter ADD MEMBER [<user_principal_name>];
+     ```
+
+5. **Connect to the database with the new user credentials:**
+   - Verify that the new user can successfully access the database using SSMS.
+
+6. **Delete the resources created for this exercise:**
+   - Remove the SQL database and related resources to avoid unnecessary costs.
+     ```bash
+     az sql db delete --resource-group <resource_group_name> --server <sql_server_name> --name <database_name> --yes
+     az sql server delete --resource-group <resource_group_name> --name <sql_server_name> --yes
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully configured Azure AD authentication for a SQL database, demonstrating my ability to secure database access using Azure AD and role-based access control. This showcases my proficiency in Azure security and management. 🛡️
