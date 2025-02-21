@@ -1,0 +1,95 @@
+🔷 Configuring and Securing ACR and AKS
+
+🎯 **Objective:**
+Set up and secure Azure Container Registry (ACR) and Azure Kubernetes Service (AKS) to manage containerized applications efficiently.
+
+🌟 **Why does this matter?:**
+ACR and AKS provide scalable and secure container management solutions, enabling developers to build, store, and deploy containerized applications easily.
+
+💡 **Use cases:**
+- Streamlining the container lifecycle
+- Enhancing security for container deployments
+- Simplifying management of Kubernetes clusters
+
+🛠️ **Steps to completion:**
+
+1. **Create an Azure Container Registry:**
+   - Use the Azure portal or Azure CLI to create a new Azure Container Registry.
+     ```bash
+     az acr create --resource-group AZ500LAB01 --name <acr_name> --sku Basic --location "East US"
+     ```
+
+2. **Create a Dockerfile, build a container, and push it to ACR:**
+   - Create a Dockerfile, build the container image, and push it to the Azure Container Registry.
+     ```bash
+     # Create a Dockerfile
+     echo 'FROM mcr.microsoft.com/azuredocs/aci-helloworld:latest
+     COPY . /app
+     WORKDIR /app
+     RUN npm install
+     CMD ["npm", "start"]' > Dockerfile
+
+     # Build the container image
+     docker build -t <acr_name>.azurecr.io/helloworld:v1 .
+
+     # Log in to ACR
+     az acr login --name <acr_name>
+
+     # Push the image to ACR
+     docker push <acr_name>.azurecr.io/helloworld:v1
+     ```
+
+3. **Create an Azure Kubernetes Service (AKS) cluster and review the deployed resources:**
+   - Create an AKS cluster and review the deployed resources.
+     ```bash
+     az aks create --resource-group AZ500LAB01 --name <aks_cluster_name> --node-count 1 --enable-addons monitoring --generate-ssh-keys --location "East US"
+     ```
+
+4. **Grant the AKS cluster permissions to access the ACR and manage its virtual network:**
+   - Grant AKS permissions to access ACR.
+     ```bash
+     az aks update --resource-group AZ500LAB01 --name <aks_cluster_name> --attach-acr <acr_name>
+     ```
+
+5. **Deploy an external service to AKS:**
+   - Deploy an external service to the AKS cluster.
+     ```bash
+     kubectl apply -f <external_service_deployment.yaml>
+     ```
+
+6. **Verify if you can access an external AKS-hosted service:**
+   - Ensure the external service is accessible.
+     ```bash
+     kubectl get services
+     # Access the service using the external IP
+     ```
+
+7. **Deploy an internal service to AKS:**
+   - Deploy an internal service to the AKS cluster.
+     ```bash
+     kubectl apply -f <internal_service_deployment.yaml>
+     ```
+
+8. **Verify if you can access an internal AKS-hosted service:**
+   - Ensure the internal service is accessible.
+     ```bash
+     kubectl get services
+     # Access the service using the internal IP within the cluster
+     ```
+
+9. **Delete the resources you have created as part of this exercise:**
+   - Remove the resources created to avoid unnecessary costs.
+     ```bash
+     az aks delete --resource-group AZ500LAB01 --name <aks_cluster_name> --yes --no-wait
+     az acr delete --resource-group AZ500LAB01 --name <acr_name> --yes
+     az group delete --name AZ500LAB01 --yes --no-wait
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully configured and secured Azure Container Registry (ACR) and Azure Kubernetes Service (AKS), demonstrating my ability to manage containerized applications efficiently. This showcases my proficiency in using Azure services for container management and orchestration. 🚀🛡️
+
+Is there another aspect or task you'd like to explore next? 😊
