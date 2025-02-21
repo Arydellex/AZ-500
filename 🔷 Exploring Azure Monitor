@@ -1,0 +1,46 @@
+🔷 Exploring Azure Monitor
+
+🎯 **Objective:**
+Monitor Azure resources using Azure Monitor to ensure their availability, performance, and smooth operation.
+
+🌟 **Why does this matter?:**
+Azure Monitor helps address service disruptions and performance degradation by providing detailed insights and automated alerts, improving team productivity and customer satisfaction.
+
+💡 **Use cases:**
+- Monitoring critical applications
+- Detecting and resolving performance issues
+- Ensuring resource availability and operation
+
+🛠️ **Steps to completion:**
+
+1. **Enable recommended alerts for a new Azure VM when the CPU percentage threshold is greater than 10%:**
+   - Set up alerts to monitor CPU usage for the virtual machine.
+     ```bash
+     az monitor metrics alert create --name "HighCPUAlert" --resource-group <resource_group_name> --scopes /subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.Compute/virtualMachines/<vm_name> --condition "avg Percentage CPU > 10" --description "Alert if CPU usage is greater than 10%" --action /subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.Insights/actionGroups/<action_group_name> --location "East US"
+     ```
+
+2. **View the resulting alert rules:**
+   - Check the alert rules that have been created to ensure they are correctly set up.
+     ```bash
+     az monitor metrics alert list --resource-group <resource_group_name> --query "[].{name:name, condition:criteria.conditions[0].conditionType, threshold:criteria.conditions[0].threshold, status:enabled}"
+     ```
+
+3. **View the Metrics and Insights of the created VM:**
+   - Access the metrics and insights for the VM to monitor its performance.
+     ```bash
+     az monitor metrics list --resource /subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.Compute/virtualMachines/<vm_name> --metric-names "Percentage CPU" --aggregation average
+     ```
+
+4. **Clean up resources:**
+   - Remove the resources created for this exercise to avoid unnecessary costs.
+     ```bash
+     az monitor metrics alert delete --name "HighCPUAlert" --resource-group <resource_group_name>
+     az group delete --name <resource_group_name> --yes --no-wait
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully set up and explored Azure Monitor to ensure the smooth operation of Azure resources, demonstrating my ability to manage and monitor resource performance effectively. This showcases my proficiency in using Azure Monitor to address performance issues and maintain resource availability. 🚀📊
