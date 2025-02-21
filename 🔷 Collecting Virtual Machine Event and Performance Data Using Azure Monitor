@@ -1,0 +1,52 @@
+🔷 Collecting Virtual Machine Event and Performance Data Using Azure Monitor
+
+🎯 **Objective:**
+Collect data from an Azure virtual machine (VM) using Azure Monitor to maximize the availability and performance of applications and services.
+
+🌟 **Why does this matter?:**
+Azure Monitor provides a comprehensive monitoring solution, collecting data from multiple sources and environments to ensure the smooth operation and performance of systems.
+
+💡 **Use cases:**
+- Monitoring and analyzing VM performance
+- Ensuring system reliability and availability
+- Aggregating and visualizing data from multiple sources
+
+🛠️ **Steps to completion:**
+
+1. **Create a Log Analytics workspace:**
+   - Use the Azure portal or Azure CLI to create a Log Analytics workspace.
+     ```bash
+     az monitor log-analytics workspace create --resource-group <resource_group_name> --workspace-name <workspace_name> --location "Central US"
+     ```
+
+2. **Enable Log Analytics virtual machine extension:**
+   - Connect the Log Analytics workspace to your virtual machine.
+     ```bash
+     az vm extension set --resource-group <resource_group_name> --vm-name <vm_name> --name OmsAgentForLinux --publisher Microsoft.EnterpriseCloud.Monitoring --protected-settings '{"workspaceId":"<workspace_id>", "workspaceKey":"<workspace_key>"}'
+     ```
+
+3. **Collect virtual machine event and performance data:**
+   - Configure Azure Monitor to collect event and performance data from the VM.
+     ```bash
+     # Use the Azure portal or Azure CLI to configure data collection settings in the Log Analytics workspace
+     ```
+
+4. **View and query collected data:**
+   - Access and analyze the collected data using Log Analytics.
+     ```bash
+     az monitor log-analytics query --workspace-id <workspace_id> --analytics-query "Perf | where ObjectName == 'Processor' | summarize avg(CounterValue) by bin(TimeGenerated, 5m)"
+     ```
+
+5. **Clean up resources:**
+   - Remove the resources created for this exercise to avoid unnecessary costs.
+     ```bash
+     az monitor log-analytics workspace delete --resource-group <resource_group_name> --workspace-name <workspace_name> --yes
+     az group delete --name <resource_group_name> --yes --no-wait
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully collected and analyzed virtual machine event and performance data using Azure Monitor, demonstrating my ability to ensure the smooth operation and performance of Azure resources. This showcases my proficiency in using Azure Monitor for comprehensive monitoring and analysis. 🚀🔍
