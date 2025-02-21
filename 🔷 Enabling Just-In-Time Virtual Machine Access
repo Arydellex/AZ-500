@@ -1,0 +1,56 @@
+🔷 Enabling Just-In-Time Virtual Machine Access
+
+🎯 **Objective:**
+Enable Just-In-Time (JIT) access for a virtual machine to enhance security by minimizing the exposure of the VM to potential threats.
+
+🌟 **Why does this matter?:**
+JIT access ensures that the virtual machine's ports are only open when needed, reducing the risk of unauthorized access and protecting against cyber threats.
+
+💡 **Use cases:**
+- Securing RDP access to VMs
+- Minimizing VM exposure to the internet
+- Enhancing overall security posture
+
+🛠️ **Steps to completion:**
+
+1. **Create a resource group in the East US region:**
+   - Use the Azure portal or Azure CLI to create a resource group.
+     ```bash
+     az group create --name AZ500LAB01 --location "East US"
+     ```
+
+2. **Enable Microsoft Defender for Cloud on your Azure subscriptions:**
+   - Enable Defender for Cloud to get enhanced security features.
+     ```bash
+     az security pricing create --name "Standard" --tier "Standard"
+     ```
+
+3. **Create a Virtual Machine in the East US region with x64 architecture and select the inbound port as RDP (3389):**
+   - Create a VM with the specified settings.
+     ```bash
+     az vm create --resource-group AZ500LAB01 --name MyVM --image Win2019Datacenter --admin-username <admin_username> --admin-password <admin_password> --size Standard_D2s_v3 --location "East US" --os-disk-size-gb 127 --storage-sku Premium_LRS --public-ip-sku Standard --public-ip-address-allocation Static
+     ```
+
+   - Open port 3389 for RDP access.
+     ```bash
+     az vm open-port --resource-group AZ500LAB01 --name MyVM --port 3389
+     ```
+
+4. **Enable JIT for the VM:**
+   - Configure JIT access for the VM in Defender for Cloud.
+     ```bash
+     az security jit-policy create --resource-group AZ500LAB01 --name MyVM --location "East US" --ports '[{ "number": 3389, "protocol": "TCP", "allowedSourceAddressPrefix": "*", "maxRequestAccessDuration": "PT1H" }]'
+     ```
+
+5. **Delete the resources you have created:**
+   - Remove the resources created for this exercise to avoid unnecessary costs.
+     ```bash
+     az group delete --name AZ500LAB01 --yes --no-wait
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully enabled Just-In-Time access for a virtual machine, demonstrating my ability to enhance security by minimizing VM exposure to potential threats. This showcases my proficiency in using Azure security features to protect resources. 🛡️🚀
