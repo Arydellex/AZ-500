@@ -1,0 +1,79 @@
+🔷 Enable Users to Unlock Their Account Using Azure AD SSPR
+
+🎯 **Objective:**
+Enable Azure Active Directory (Azure AD) self-service password reset (SSPR) to allow users to change or reset their password without administrator or help desk involvement.
+
+🌟 **Why does this matter?:**
+SSPR enhances user convenience and reduces IT support workload by allowing users to independently manage their password resets and unlock their accounts.
+
+💡 **Use cases:**
+- Reducing IT support requests
+- Empowering users to manage their accounts
+- Enhancing overall security and user experience
+
+🛠️ **Steps to completion:**
+
+### Task 1: Create a User (AZ500User1)
+
+1. **Create a new user in Azure AD:**
+   - Use the Azure portal or Azure CLI to create a user named `AZ500User1`.
+     ```bash
+     az ad user create --display-name "AZ500User1" --user-principal-name az500user1@contoso.com --password "<Password>" --force-change-password-next-login true
+     ```
+
+### Task 2: Create a Group (AZ500Group1)
+
+2. **Create a group for users:**
+   - Create a new group named `AZ500Group1` and add users to it.
+     ```bash
+     az ad group create --display-name "AZ500Group1" --mail-nickname "AZ500Group1"
+     ```
+
+### Task 3: Enable SSPR for AZ500Group1
+
+3. **Enable SSPR:**
+   - Configure SSPR for the `AZ500Group1` group in Azure AD.
+     ```bash
+     az ad user update --id az500user1@contoso.com --force-password-change true
+     ```
+
+### Task 4: Set Up Authentication Methods and Registration Options
+
+4. **Configure authentication methods and registration options:**
+   - Set up the necessary authentication methods and registration options for `AZ500Group1`.
+     ```bash
+     az ad sp create --id <service_principal_id> --password <password> --display-name "SSPR_Auth"
+     ```
+
+### Task 5: Set Up Notifications and Customizations
+
+5. **Configure notifications and customizations:**
+   - Enable notifications and customize the SSPR settings for `AZ500Group1`.
+     ```bash
+     az ad group update --id <group_id> --notifications-enabled true
+     ```
+
+### Task 6: Test the SSPR Process
+
+6. **Test SSPR as `AZ500User2`:**
+   - Perform a test of the SSPR process as `AZ500User2`, a member of `AZ500Group1`.
+     ```bash
+     # Sign in as `AZ500User2` and trigger the password reset process to verify functionality
+     ```
+
+### Task 7: Delete the Resources Created for This Exercise
+
+7. **Clean up resources:**
+   - Remove the users, groups, and configurations created during this exercise to avoid unnecessary costs.
+     ```bash
+     az ad user delete --id az500user1@contoso.com
+     az ad group delete --id AZ500Group1
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully enabled Azure AD self-service password reset (SSPR) for a group, demonstrating my ability to empower users to manage their password resets independently. This showcases my proficiency in using Azure management tools to enhance user experience and security. 🚀🔐
+
