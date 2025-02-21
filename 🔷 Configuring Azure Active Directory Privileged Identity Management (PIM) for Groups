@@ -1,0 +1,119 @@
+🔷 Configuring Azure Active Directory Privileged Identity Management (PIM) for Groups
+
+🎯 **Objective:**
+Control and monitor access to sensitive resources by configuring Azure AD PIM for groups, ensuring secure authentication for group members.
+
+🌟 **Why does this matter?:**
+Azure AD PIM for groups provides a secure way to grant temporary access to users in a group, enhancing security and preventing unauthorized access to sensitive resources.
+
+💡 **Use cases:**
+- Managing access to sensitive resources
+- Enhancing security for group-based access
+- Monitoring and controlling group memberships
+
+🛠️ **Steps to completion:**
+
+### Task 1: Create a Basic Group and Add Members
+
+1. **Create a basic group and add members:**
+   - Use the Azure portal or Azure CLI to create a new group and add members.
+     ```bash
+     az ad group create --display-name "PIM-Group" --mail-nickname "PIMGroup"
+     az ad group member add --group "PIM-Group" --member-id <user_object_id>
+     ```
+
+### Task 2: Bring the Group into Privileged Identity Management (preview)
+
+2. **Bring the group into Privileged Identity Management:**
+   - Discover and manage the group in PIM.
+     ```bash
+     az pim group add --resource-group <resource_group_name> --name "PIM-Group"
+     ```
+
+### Task 3: Configure Azure AD to Assign Eligibility for a Group (preview) in Privileged Identity Management
+
+3.1 **Assign an owner or member of a group:**
+   - Assign eligibility for a group member or owner role.
+     ```bash
+     az pim group assignment create --resource-group <resource_group_name> --name "PIM-Group" --principal-id <user_object_id> --role "Owner"
+     ```
+
+3.2 **Update or remove an existing role assignment:**
+   - Update or remove the role assignment as needed.
+     ```bash
+     az pim group assignment update --resource-group <resource_group_name> --name "PIM-Group" --principal-id <user_object_id> --role "Member"
+     az pim group assignment delete --resource-group <resource_group_name> --name "PIM-Group" --principal-id <user_object_id>
+     ```
+
+### Task 4: Configure Privileged Identity Management for Groups Settings (preview)
+
+4. **Configure Privileged Identity Management for Groups settings:**
+   - Set up specific PIM settings for groups.
+     ```bash
+     az pim group settings update --resource-group <resource_group_name> --name "PIM-Group" --settings @settings.json
+     ```
+
+### Task 5: Activate Your Group Membership or Ownership in Privileged Identity Management
+
+5.1 **Activate a role:**
+   - Activate your group membership or ownership role.
+     ```bash
+     az pim role activate --role-name "Owner" --group "PIM-Group"
+     ```
+
+5.2 **View the status of your requests:**
+   - Check the status of your activation requests.
+     ```bash
+     az pim role request list --resource-group <resource_group_name> --name "PIM-Group"
+     ```
+
+5.3 **Cancel a pending request:**
+   - Cancel any pending activation requests if necessary.
+     ```bash
+     az pim role request cancel --resource-group <resource_group_name> --name "PIM-Group" --request-id <request_id>
+     ```
+
+### Task 6: Approve Activation Requests for Group Members and Owners (preview)
+
+6.1 **View pending requests:**
+   - Review pending activation requests.
+     ```bash
+     az pim role request list --resource-group <resource_group_name> --name "PIM-Group" --status "Pending"
+     ```
+
+6.2 **Approve requests:**
+   - Approve the activation requests for group members and owners.
+     ```bash
+     az pim role request approve --resource-group <resource_group_name> --name "PIM-Group" --request-id <request_id>
+     ```
+
+### Task 7: Extend or Renew PIM for Groups Assignments (preview)
+
+7.1 **Self-extend expiring assignments:**
+   - Extend expiring assignments for yourself.
+     ```bash
+     az pim role assignment extend --resource-group <resource_group_name> --name "PIM-Group" --principal-id <user_object_id>
+     ```
+
+7.2 **Approve the extension by Admin:**
+   - Admin approval for extending the assignment.
+     ```bash
+     az pim role assignment approve --resource-group <resource_group_name> --name "PIM-Group" --principal-id <user_object_id>
+     ```
+
+### Task 8: Delete the Resources You Created for This Exercise
+
+8. **Clean up resources to avoid unnecessary costs:**
+   - Remove the resources created during this exercise.
+     ```bash
+     az group delete --name <resource_group_name> --yes --no-wait
+     az ad group delete --id "PIM-Group"
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully configured Azure AD Privileged Identity Management for groups, demonstrating my ability to manage and control group-based access to sensitive resources. This showcases my proficiency in using Azure security tools to enhance group-based access security. 🛡️🚀
+
