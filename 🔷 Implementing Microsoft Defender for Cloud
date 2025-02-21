@@ -1,0 +1,47 @@
+🔷 Implementing Microsoft Defender for Cloud
+
+🎯 **Objective:**
+Secure your application from cyber threats by enabling enhanced security features using Microsoft Defender for Cloud.
+
+🌟 **Why does this matter?:**
+Microsoft Defender for Cloud provides comprehensive security measures, helping to protect cloud-based applications from cyber threats and vulnerabilities.
+
+💡 **Use cases:**
+- Securing cloud-based applications
+- Monitoring and improving security posture
+- Detecting and responding to security threats
+
+🛠️ **Steps to completion:**
+
+1. **Review Microsoft Defender for Cloud on your Azure subscription:**
+   - Access Microsoft Defender for Cloud to review the current security posture.
+     ```bash
+     az security assessment list --resource-group <resource_group_name> --query "[].{Name:name, Status:status}"
+     ```
+
+2. **Enable Microsoft Defender plans to get the enhanced security features:**
+   - Enable the Microsoft Defender plans for enhanced security.
+     ```bash
+     az security pricing create --name "Standard" --tier "Standard"
+     ```
+
+3. **Configure email notifications for security alerts:**
+   - Set up email notifications to receive security alerts.
+     ```bash
+     az security contact create --name <contact_name> --email <email_address> --alert-admins "On"
+     ```
+
+4. **Clean up resources:**
+   - Remove the resources created for this exercise to avoid unnecessary costs.
+     ```bash
+     az security pricing delete --name "Standard"
+     az group delete --name <resource_group_name> --yes --no-wait
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully implemented Microsoft Defender for Cloud to secure an application from cyber threats, demonstrating my ability to enhance security and monitor the security posture effectively. This showcases my proficiency in using Azure security tools for comprehensive protection. 🛡️🚀
+
