@@ -1,0 +1,61 @@
+🔷 Application Service Groups
+
+🎯 **Objective:**
+Configure application service groups to manage network security for virtual machines (VMs) in Azure.
+
+🌟 **Why does this matter?:**
+Application security groups (ASGs) allow you to define network security policies based on the application structure, enhancing the flexibility and manageability of your network security.
+
+💡 **Use cases:**
+- Grouping VMs based on application roles
+- Simplifying network security rule management
+- Enhancing security for multi-tier applications
+
+🛠️ **Steps to completion:**
+
+1. **Create two Windows virtual machines with IIS installed:**
+   - Use the Azure portal or Azure CLI to create two VMs with IIS installed.
+     ```bash
+     az vm create --resource-group <resource_group_name> --name <vm1_name> --image Win2019Datacenter --admin-username <admin_username> --admin-password <admin_password>
+     az vm create --resource-group <resource_group_name> --name <vm2_name> --image Win2019Datacenter --admin-username <admin_username> --admin-password <admin_password>
+
+     # Install IIS on both VMs
+     az vm extension set --resource-group <resource_group_name> --vm-name <vm1_name> --name CustomScriptExtension --publisher Microsoft.Compute --settings '{"commandToExecute":"powershell -command Install-WindowsFeature -name Web-Server"}'
+     az vm extension set --resource-group <resource_group_name> --vm-name <vm2_name> --name CustomScriptExtension --publisher Microsoft.Compute --settings '{"commandToExecute":"powershell -command Install-WindowsFeature -name Web-Server"}'
+     ```
+
+2. **Add an inbound deny rule and test the rule:**
+   - Create a network security group (NSG) and add an inbound deny rule.
+     ```bash
+     az network nsg create --resource-group <resource_group_name> --name <nsg_name>
+     az network nsg rule create --resource-group <resource_group_name> --nsg-name <nsg_name> --name DenyRule --priority 1000 --source-address-prefixes "*" --destination-port-ranges <port> --access Deny --protocol Tcp --direction Inbound
+     ```
+
+3. **Create and configure an application security group:**
+   - Create an application security group and associate it with the VMs.
+     ```bash
+     az network asg create --resource-group <resource_group_name> --name <asg_name>
+     az network nic update --resource-group <resource_group_name> --name <nic1_name> --application-security-groups <asg_name>
+     az network nic update --resource-group <resource_group_name> --name <nic2_name> --application-security-groups <asg_name>
+     ```
+
+4. **Test the application security group:**
+   - Verify that the ASG configuration is working as expected by testing connectivity.
+     ```bash
+     # Use tools like `curl`, browser access, or PowerShell to test connectivity
+     ```
+
+5. **Delete resources:**
+   - Remove the resources created for this exercise to avoid unnecessary costs.
+     ```bash
+     az group delete --name <resource_group_name> --yes --no-wait
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully configured application service groups to manage network security for VMs in Azure, demonstrating my ability to enhance security and simplify network management. 🚀🔐
+
+Is there another aspect or task you'd like to dive into next? 😊
