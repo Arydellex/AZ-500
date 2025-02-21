@@ -1,0 +1,71 @@
+🔷 Multifactor Authentication, Conditional Access and Azure Active Directory Identity Protection
+
+🎯 **Objective:**
+Enhance security measures by setting up Conditional Access policies, Multi-Factor Authentication (MFA), and Azure AD Identity Protection.
+
+🌟 **Why does this matter?:**
+Implementing MFA and Conditional Access policies strengthens your organization's security, protecting against unauthorized access and potential threats.
+
+💡 **Use cases:**
+- Securing access to the Azure portal
+- Enhancing identity protection
+- Implementing robust access control measures
+
+🛠️ **Steps to completion:**
+
+1. **Create a user:**
+   - Create a new user in Azure AD.
+     ```bash
+     az ad user create --display-name "John Doe" --user-principal-name johndoe@contoso.com --password "<Password>" --force-change-password-next-login true
+     ```
+
+2. **Create a conditional access policy:**
+   - Define a Conditional Access policy that requires MFA for sign-in.
+     ```bash
+     az ad conditional-access policy create --display-name "Require MFA for Azure portal" --conditions @conditions.json --grant-controls @grantControls.json
+     ```
+
+3. **Configure which apps require multi-factor authentication:**
+   - Specify the applications that require MFA.
+     ```bash
+     az ad conditional-access policy update --id <policy_id> --add grantControls.builtInControls "mfa"
+     ```
+
+4. **Configure multi-factor authentication for access:**
+   - Enable MFA for the user with the phone option.
+     ```bash
+     az ad user update --id johndoe@contoso.com --set usageLocation=US
+     az ad user mfa --id johndoe@contoso.com --method phone
+     ```
+
+5. **Activate the policy:**
+   - Activate the Conditional Access policy.
+     ```bash
+     az ad conditional-access policy update --id <policy_id> --enabled true
+     ```
+
+6. **Test the policy:**
+   - Verify that the MFA requirement is enforced when signing in to the Azure portal.
+     ```bash
+     # Attempt to sign in with the new user credentials and verify the MFA prompt
+     ```
+
+7. **Configure Identity Protection:**
+   - Set up Azure AD Identity Protection to enhance security measures further.
+     ```bash
+     az ad identity-protection policy create --name "Identity Protection Policy" --policy-settings @identityProtectionSettings.json
+     ```
+
+8. **Delete the resources you created for this exercise:**
+   - Remove the resources to avoid unnecessary costs.
+     ```bash
+     az ad user delete --id johndoe@contoso.com
+     az group delete --name <resource_group_name> --yes --no-wait
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully set up Multifactor Authentication, Conditional Access policies, and Azure AD Identity Protection to enhance security measures, demonstrating my ability to implement robust access control and identity protection. This showcases my proficiency in using Azure security features to protect digital assets. 🛡️🚀
