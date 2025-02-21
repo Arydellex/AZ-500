@@ -1,0 +1,87 @@
+🔷 Deploying an Always Encrypted Implementation
+
+🎯 **Objective:**
+Implement Always Encrypted to protect sensitive data in Azure SQL Database.
+
+🌟 **Why does this matter?:**
+Always Encrypted ensures that sensitive data, such as credit card numbers and social security numbers, is protected by encrypting data within client applications and never revealing encryption keys to the Database Engine.
+
+💡 **Use cases:**
+- Protecting personally identifiable information (PII)
+- Ensuring compliance with data protection regulations
+- Securing sensitive data in databases
+
+🛠️ **Steps to completion:**
+
+1. **Create and populate the database schema:**
+   - Use SQL Server Management Studio (SSMS) to create the database schema and populate it with data.
+     ```sql
+     CREATE TABLE Customers (
+         CustomerID int PRIMARY KEY,
+         Name nvarchar(50),
+         CreditCardNumber nvarchar(50) ENCRYPTED WITH (COLUMN_ENCRYPTION_KEY = MyCEK, ENCRYPTION_TYPE = Deterministic)
+     );
+
+     INSERT INTO Customers (CustomerID, Name, CreditCardNumber)
+     VALUES (1, 'John Doe', '4111111111111111'), (2, 'Jane Smith', '5555555555554444');
+     ```
+
+2. **Encrypt columns:**
+   - Configure Always Encrypted using SSMS to encrypt specific columns.
+     ```sql
+     -- Create a Column Master Key
+     CREATE COLUMN MASTER KEY MyCMK WITH (
+         KEY_STORE_PROVIDER_NAME = 'MSSQL_CERTIFICATE_STORE',
+         KEY_PATH = 'CurrentUser/My/ColumnMasterKeyCertificate'
+     );
+
+     -- Create a Column Encryption Key
+     CREATE COLUMN ENCRYPTION KEY MyCEK WITH VALUES (
+         COLUMN_MASTER_KEY = MyCMK,
+         ALGORITHM = 'RSA_OAEP',
+         ENCRYPTED_VALUE = 0x01000000... -- encrypted value
+     );
+
+     -- Encrypt the CreditCardNumber column
+     ALTER TABLE Customers
+     ALTER COLUMN CreditCardNumber nvarchar(50)
+     ENCRYPTED WITH (COLUMN_ENCRYPTION_KEY = MyCEK, ENCRYPTION_TYPE = Deterministic);
+     ```
+
+3. **Query encrypted columns:**
+   - Use parameterization for Always Encrypted to query encrypted data.
+     ```csharp
+     using System.Data.SqlClient;
+
+     string connectionString = "Server=<your_server>; Database=<your_database>; Integrated Security=true;";
+     using (SqlConnection connection = new SqlConnection(connectionString))
+     {
+         connection.Open();
+         string query = "SELECT CustomerID, Name, CreditCardNumber FROM Customers WHERE CustomerID = @CustomerID";
+         using (SqlCommand command = new SqlCommand(query, connection))
+         {
+             command.Parameters.AddWithValue("@CustomerID", 1);
+             using (SqlDataReader reader = command.ExecuteReader())
+             {
+                 while (reader.Read())
+                 {
+                     Console.WriteLine($"ID: {reader["CustomerID"]}, Name: {reader["Name"]}, Credit Card: {reader["CreditCardNumber"]}");
+                 }
+             }
+         }
+     }
+     ```
+
+4. **Delete resources:**
+   - Remove the resources created for this exercise to avoid unnecessary costs.
+     ```bash
+     az sql db delete --resource-group <resource_group_name> --server <sql_server_name> --name <database_name> --yes
+     az sql server delete --resource-group <resource_group_name> --name <sql_server_name> --yes
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully deployed Always Encrypted in an Azure SQL Database, demonstrating my ability to protect sensitive data by encrypting specific columns and querying encrypted data securely. This showcases my proficiency in Azure SQL Database security. 🛡️
