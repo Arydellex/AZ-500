@@ -1,0 +1,50 @@
+🔷 Managing Virtual Machine Updates with Azure
+
+🎯 **Objective:**
+Utilize Update Management to automate and manage updates for virtual machines, ensuring systems are up-to-date and secure.
+
+🌟 **Why does this matter?:**
+Update Management simplifies the process of maintaining the security and compliance of virtual machines by automating updates and tracking compliance status.
+
+💡 **Use cases:**
+- Automating security updates for virtual machines
+- Ensuring compliance with security policies
+- Simplifying update management for IT administrators
+
+🛠️ **Steps to completion:**
+
+1. **Create a virtual machine:**
+   - Use the Azure portal or Azure CLI to create a new virtual machine.
+     ```bash
+     az vm create --resource-group <resource_group_name> --name <vm_name> --image Win2019Datacenter --admin-username <admin_username> --admin-password <admin_password>
+     ```
+
+2. **Onboard Update Manager to the VM:**
+   - Enable Update Management for the virtual machine.
+     ```bash
+     az automation account create --resource-group <resource_group_name> --name <automation_account_name> --location <location>
+     az monitor log-analytics workspace create --resource-group <resource_group_name> --workspace-name <workspace_name> --location <location>
+     az vm extension set --resource-group <resource_group_name> --vm-name <vm_name> --name DependencyAgentWindows --publisher Microsoft.Azure.Monitoring.DependencyAgent
+     az vm extension set --resource-group <resource_group_name> --vm-name <vm_name> --name OmsAgentForLinux --publisher Microsoft.EnterpriseCloud.Monitoring --protected-settings "{\"workspaceId\":\"<workspace_id>\",\"workspaceKey\":\"<workspace_key>\"}"
+     ```
+
+3. **Examine Hybrid Worker Groups:**
+   - Configure Hybrid Runbook Worker groups if necessary.
+     ```bash
+     az automation hybrid-runbook-worker-group create --resource-group <resource_group_name> --automation-account-name <automation_account_name> --name <hybrid_worker_group_name>
+     ```
+
+4. **Delete resources:**
+   - Remove the resources created for this exercise to avoid unnecessary costs.
+     ```bash
+     az group delete --name <resource_group_name> --yes --no-wait
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully managed virtual machine updates using Azure's Update Management, demonstrating my ability to automate update processes and ensure system security. This showcases my proficiency in Azure management and IT administration. 🛠️🔐
+
+Is there another aspect or task you'd like to dive into next? 😊
