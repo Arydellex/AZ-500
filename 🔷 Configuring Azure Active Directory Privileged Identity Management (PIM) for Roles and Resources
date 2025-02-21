@@ -1,0 +1,71 @@
+🔷 Configuring Azure Active Directory Privileged Identity Management (PIM) for Roles and Resources
+
+🎯 **Objective:**
+Manage, control, and monitor access to important resources using Azure AD Privileged Identity Management (PIM) by configuring and testing roles and resource settings.
+
+🌟 **Why does this matter?:**
+PIM enhances security and governance by controlling access to resources, ensuring that privileged roles are assigned and activated only when necessary.
+
+💡 **Use cases:**
+- Managing access to Azure AD, Azure, and other Microsoft Online Services
+- Enhancing security for privileged roles
+- Monitoring and controlling resource access
+
+🛠️ **Steps to completion:**
+
+### Task 1: Configure Azure AD Privileged Identity Management for Azure AD Roles
+
+1. **Configure Azure AD role settings in Privileged Identity Management:**
+   - Access the Azure portal and navigate to Azure AD PIM.
+     ```bash
+     az role definition list --name "Billing Administrator"
+     ```
+
+2. **Assign Azure AD roles in Privileged Identity Management:**
+   - Assign the Billing Administrator role to the user `AZ500User1`.
+     ```bash
+     az role assignment create --assignee <user_object_id> --role "Billing Administrator"
+     ```
+
+3. **Activate the PIM role assigned:**
+   - Activate the Billing Administrator role for `AZ500User1`.
+     ```bash
+     az pim role activate --role-name "Billing Administrator" --user-id <user_object_id>
+     ```
+
+4. **Test the activated PIM role:**
+   - Verify that the user `AZ500User1` can perform the tasks associated with the Billing Administrator role.
+
+### Task 2: Configure Azure AD Privileged Identity Management for Azure Resources
+
+1. **Configure Azure resource role settings in Privileged Identity Management:**
+   - Configure role settings for Azure resources in PIM.
+     ```bash
+     az role definition list --name "Virtual Machine Contributor"
+     ```
+
+2. **Assign the Azure resource role:**
+   - Assign the Virtual Machine Contributor role to `AZ500User1` for a specific resource group.
+     ```bash
+     az role assignment create --assignee <user_object_id> --role "Virtual Machine Contributor" --resource-group <resource_group_name>
+     ```
+
+3. **Test the assigned resource role:**
+   - Verify that `AZ500User1` can manage virtual machines within the assigned resource group.
+
+### Task 3: Delete the Resources Created for This Exercise
+
+1. **Clean up resources to avoid unnecessary costs:**
+   - Remove the resources and roles assigned during this exercise.
+     ```bash
+     az role assignment delete --assignee <user_object_id> --role "Billing Administrator"
+     az role assignment delete --assignee <user_object_id> --role "Virtual Machine Contributor" --resource-group <resource_group_name>
+     az group delete --name <resource_group_name> --yes --no-wait
+     ```
+
+⚡ **Tip:**
+Regularly assess whether you need the resources post-exercise to avoid extra costs.
+
+---
+
+In this work sample, I successfully configured and tested Azure AD Privileged Identity Management (PIM) for roles and resources, demonstrating my ability to manage, control, and monitor access to important resources. This showcases my proficiency in using Azure security tools to enhance governance and security. 🛡️🚀
